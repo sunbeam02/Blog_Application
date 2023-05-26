@@ -1,5 +1,59 @@
 {% extends 'blog/base.html'%}
 
 {% block content%}
-    <h1 class='text-red-500'>Index</h1>
+<div>
+    <div class="mx-56 mt-12">
+        <h1 class='font-bold text-3xl'>Django Post</h1>
+        <h5>A blog about Django and python</h5>
+    </div>
+</div>
+
+{% for object in object_list %}
+<div>
+    <div class="mx-56 my-8">
+        <h3 class="font-semibold text-2xl ">{{ object.title }}</h3>
+        <p class="text-slate-500 text-sm">{{ object.date }}</p>
+        <p class="text-slate-500 text-sm"> Posted by {{object.author.username}}</p>
+        {% if object.likes.count == 1 %}
+            <p class="text-slate-500 text-sm">{{object.likes.count}} Person likes this Post</p>
+        {%else%}
+            <p class="text-slate-500 text-sm">{{object.likes.count}} people like this post</p>
+        {% endif%}
+
+        <div class="my-3">
+            {{ object.content|truncatewords_html:50|safe }}
+        </div>
+
+        <a href="{% url 'detail_article' object.id %}" class="text-red-500 underline">Read more</a>
+    </div>
+</div>
+{% endfor %}
+
+    <nav class="flex justify-center">
+        <ul class="inline-flex -space-x-px text-red-600">
+            <div class=" flex items-center ">
+                {% if page_obj.has_previous %}
+                    <li class=>
+                        <a class="px-3 py-2 ml-0 leading-tight border border-red-600 rounded-l-lg hover:bg-red-500 hover:text-white" href="?page=1">&laquo; First </a>
+                    </li>
+                    <li>
+                        <a class="px-3 py-2 ml-0 leading-tight border border-red-600 hover:bg-red-500 hover:text-white" href="?page={{page_obj.has_previous_page_number}}">Previous</a>
+                    </li>
+                {%endif%}
+
+                <li class="">
+                    <a class="px-3 py-2 ml-0 leading-tight border border-red-600 rounded-l-lg hover:bg-red-500 hover:text-white">Page {{page_obj.number }} of {{page_obj.paginator.num_pages}}. </a>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li>
+                    <a class=" px-3 py-2 ml-0 leading-tight  border border-red-600 hover:bg-red-500 hover:text-white"  href="?page={{ page_obj.next_page_number}}">Next</a>
+                </li>
+                <li> 
+                    <a class="px-3 py-2 ml-0 leading-tight border border-red-600 rounded-r-lg hover:bg-red-500 hover:text-white" href="?page={{page_obj.paginator.num_pages }}">Last &raquo;</a>
+                </li>
+                {% endif %}
+            </div>
+        </ul>
+    </nav>
 {% endblock content %}

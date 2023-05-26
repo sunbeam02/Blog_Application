@@ -6,12 +6,17 @@
     <div class="w-full">
         <div class=" flex justify-center mt-5">
             <form method="POST" class="p-4 border rounded-md shadow outline-none">
+                <h1 class="mb-4">Sign Up</h1>
                 {% csrf_token%}
                 {{ form|crispy }}
                 <div>
                     <button class='border p-2 text-white bg-gray-700' type="submit">Sign up</button>
                 </div>
+                <div>
+                    <small>Already have an account?<a href="{% url 'login' %}" class="ml-2 text-red-600 underline">Sign In</a></small>
+                </div>
             </form>
+
         </div>
     </div>
 {%endblock content%}

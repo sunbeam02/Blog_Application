@@ -1,12 +1,14 @@
-<nav class="mx-12 pt-8 h-auto flex justify-between items-center">
+<nav class=" mx-12 pt-8 h-auto flex justify-between items-center font-serif">
     <div>
-        <a href="{% url 'index'%}"><img src="./assets/Logo.png" alt="Sunbeam Blog"></a>
+        <a href="{% url 'index'%}" class="font-bold text-2xl">Sunbeam Blog</a>
     </div>
     <ul class="flex items-center space-x-10 font-semibold invisible md:visible">
-        <li class="hover:underline"><a href="./index.html">Products</a></li>
-        <li class="hover:underline"><a href="./blog.html">Services</a></li>
-        <li class="hover:underline"><a href="./about.html">About</a></li>
-        <button class="border-2 border-black px-6 py-2 rounded-full font-semibold">Log in</button>
+        {% if request.user.is_authenticated %}
+          <button class="border-2 border-gray-500 px-6 py-1 rounded-lg font-semibold"><a href="{% url 'logout' %}">Sign out</a></button>
+        {% else %}
+        <button class="border-2 border-gray-500 px-6 py-1 rounded-lg font-semibold"><a href="{% url 'login' %}">Log in</a></button>
+        <button class="border-2 border-gray-500 px-6 py-1 rounded-lg font-semibold"><a href="{% url 'register' %}"> Sign up</a></button>
+        {% endif %}
         <i class="fa fa-bars visible md:invisible" aria-hidden="true"></i>
     </ul>
 </nav>
